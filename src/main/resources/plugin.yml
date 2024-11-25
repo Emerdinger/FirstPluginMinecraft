@@ -1,0 +1,33 @@
+name: firstplugin
+version: '1.0-SNAPSHOT'
+main: com.emer.firstplugin.Firstplugin
+api-version: '1.21'
+authors: [ Emer ]
+description: Test plugin
+commands:
+  heal:
+    description: Command to health your entire health
+  gm:
+    description: set gamemode
+  config:
+    description: configure
+  permission:
+    description: Command to probe permissions
+  lava-particle:
+    description: spawn a lava particle in player location
+  vanish:
+    description: player get vanished
+  rules:
+    description: get the rules book
+  banner:
+    description: create new banner
+  punish:
+    description: ban, kick, tempban
+  message:
+    description: send message to another online player
+  reply:
+    description: reply message to the las player to messaging you
+  menu:
+    description: open a menu
+  boost:
+    description: boost your weapon

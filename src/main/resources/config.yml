@@ -1,0 +1,10 @@
+Word: 'Bananas'
+# Number to set
+Number: 52
+# Boolean to set
+Enable: true
+# String list
+String-list:
+  - 'Carro'
+  - 'Moto'
+  - 'Perico'
