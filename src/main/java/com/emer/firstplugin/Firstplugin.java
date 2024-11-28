@@ -55,6 +55,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
         getCommand("reply").setExecutor(new ReplyCommand(this));
         getCommand("menu").setExecutor(new MenuCommand());
         getCommand("boost").setExecutor(new BoostCommand());
+        getCommand("skull").setExecutor(new SkullCommand());
 
         events.clearAllBossBars();
 

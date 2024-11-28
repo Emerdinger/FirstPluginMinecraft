@@ -31,3 +31,5 @@ commands:
     description: open a menu
   boost:
     description: boost your weapon
+  skull:
+    description: get player skull
