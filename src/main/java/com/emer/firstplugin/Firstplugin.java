@@ -9,12 +9,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -26,6 +29,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        initiateFile("warps");
         instance = this;
         events = new Events();
         saveDefaultConfig();
@@ -41,7 +45,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
 
 
         getCommand("heal").setExecutor(new HealCommand());
-        getCommand("gm").setExecutor(new GamemodeCommand());
+        getCommand("gm").setExecutor(new GamemodeCommand(this));
         getCommand("gm").setTabCompleter(new GamemodeTab());
         getCommand("config").setExecutor(new ConfigCommand(this));
         getCommand("permission").setExecutor(new PermissionsCommand());
@@ -80,4 +84,16 @@ public final class Firstplugin extends JavaPlugin implements Listener {
     }
 
     public HashMap<UUID, UUID> getRecentMessages() {return recentMessages;}
+
+    private File initiateFile(String name) {
+        File file = new File(getDataFolder(),name+".yaml");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Can't load file! Error.");
+            }
+        }
+        return file;
+    }
 }

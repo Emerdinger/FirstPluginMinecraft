@@ -1,16 +1,26 @@
 package com.emer.firstplugin.Commands;
 
+import com.emer.firstplugin.Firstplugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 public class GamemodeCommand implements CommandExecutor {
+
+    private final Firstplugin main;
+
+    public GamemodeCommand(Firstplugin main) {
+        this.main = main;
+    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -55,6 +65,8 @@ public class GamemodeCommand implements CommandExecutor {
     }
 
     private void changeGamemode(Player player, String[] strings) {
+        File warpsFile = new File(main.getDataFolder(), "warps.yaml");
+        YamlConfiguration warpsModify = YamlConfiguration.loadConfiguration(warpsFile);
         Set<String> validLetters = Set.of("c", "s", "sp");
 
         if (!validLetters.contains(strings[0])){
@@ -63,12 +75,21 @@ public class GamemodeCommand implements CommandExecutor {
 
         if (strings[0].equals("c")){
             player.setGameMode(GameMode.CREATIVE);
+            warpsModify.set(player.getDisplayName(), "Creative");
         };
         if (strings[0].equals("s")){
             player.setGameMode(GameMode.SURVIVAL);
+            warpsModify.set(player.getDisplayName(), "Survival");
         };
         if (strings[0].equals("sp")){
             player.setGameMode(GameMode.SPECTATOR);
+            warpsModify.set(player.getDisplayName(), "Spectator");
         };
+
+        try {
+            warpsModify.save(warpsFile);
+        } catch (IOException e) {
+            System.out.println("Error saving state");
+        }
     }
 }
