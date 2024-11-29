@@ -60,7 +60,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
     public HashMap<UUID, UUID> getRecentMessages() {return recentMessages;}
 
     private void initiateFile(String name) {
-        File file = new File(getDataFolder(),name+".yaml");
+        File file = new File(getDataFolder(),name+".yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -87,5 +87,8 @@ public final class Firstplugin extends JavaPlugin implements Listener {
         Objects.requireNonNull(getCommand("menu"), "Command not found").setExecutor(new MenuCommand());
         Objects.requireNonNull(getCommand("boost"), "Command not found").setExecutor(new BoostCommand());
         Objects.requireNonNull(getCommand("skull"),"Command not found").setExecutor(new SkullCommand());
+        Objects.requireNonNull(getCommand("setTp"), "Command not found").setExecutor(new CreateWarpCommand(this));
+        Objects.requireNonNull(getCommand("delTp"), "Command not found").setExecutor(new DeleteWarpCommand(this));
+        Objects.requireNonNull(getCommand("go"), "Command not found").setExecutor(new WarpCommand(this));
     }
 }

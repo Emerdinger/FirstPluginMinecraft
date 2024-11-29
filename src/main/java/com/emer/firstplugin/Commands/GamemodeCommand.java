@@ -65,8 +65,6 @@ public class GamemodeCommand implements CommandExecutor {
     }
 
     private void changeGamemode(Player player, String[] strings) {
-        File warpsFile = new File(main.getDataFolder(), "warps.yaml");
-        YamlConfiguration warpsModify = YamlConfiguration.loadConfiguration(warpsFile);
         Set<String> validLetters = Set.of("c", "s", "sp");
 
         if (!validLetters.contains(strings[0])){
@@ -75,21 +73,12 @@ public class GamemodeCommand implements CommandExecutor {
 
         if (strings[0].equals("c")){
             player.setGameMode(GameMode.CREATIVE);
-            warpsModify.set(player.getDisplayName(), "Creative");
         };
         if (strings[0].equals("s")){
             player.setGameMode(GameMode.SURVIVAL);
-            warpsModify.set(player.getDisplayName(), "Survival");
         };
         if (strings[0].equals("sp")){
             player.setGameMode(GameMode.SPECTATOR);
-            warpsModify.set(player.getDisplayName(), "Spectator");
         };
-
-        try {
-            warpsModify.save(warpsFile);
-        } catch (IOException e) {
-            System.out.println("Error saving state");
-        }
     }
 }

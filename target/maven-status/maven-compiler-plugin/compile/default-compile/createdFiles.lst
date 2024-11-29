@@ -1,10 +1,13 @@
 com\emer\firstplugin\Tabs\GamemodeTab.class
+com\emer\firstplugin\Commands\CreateWarpCommand.class
 com\emer\firstplugin\Commands\GamemodeCommand.class
 com\emer\firstplugin\Tabs\PunishTab.class
 com\emer\firstplugin\Commands\BoostCommand.class
 com\emer\firstplugin\Commands\SkullCommand.class
 com\emer\firstplugin\Commands\MessageCommand.class
 com\emer\firstplugin\Commands\PermissionsCommand.class
+com\emer\firstplugin\Commands\DeleteWarpCommand.class
+com\emer\firstplugin\Commands\WarpCommand.class
 com\emer\firstplugin\Events\SectionFive\EventsFive$1.class
 com\emer\firstplugin\Firstplugin.class
 com\emer\firstplugin\Commands\PunishCommand.class

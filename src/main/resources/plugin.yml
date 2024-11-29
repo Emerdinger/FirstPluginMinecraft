@@ -33,3 +33,9 @@ commands:
     description: boost your weapon
   skull:
     description: get player skull
+  setTp:
+    description: create a tp to go
+  delTp:
+    description: Delete a tp
+  go:
+    description: tp to a warp
