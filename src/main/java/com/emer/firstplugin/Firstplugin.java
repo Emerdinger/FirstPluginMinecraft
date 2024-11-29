@@ -6,12 +6,6 @@ import com.emer.firstplugin.Events.SectionFour.Events;
 import com.emer.firstplugin.Tabs.GamemodeTab;
 import com.emer.firstplugin.Tabs.PunishTab;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,17 +13,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class Firstplugin extends JavaPlugin implements Listener {
 
     private Events events;
     public static Firstplugin instance;
-    private HashMap<UUID, UUID> recentMessages = new HashMap<>();
+    private final HashMap<UUID, UUID> recentMessages = new HashMap<>();
 
     @Override
     public void onEnable() {
         initiateFile("warps");
+        initiateFile("language");
         instance = this;
         events = new Events();
         saveDefaultConfig();
@@ -37,37 +33,15 @@ public final class Firstplugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(events, this);
         getServer().getPluginManager().registerEvents(new EventsFive(), this);
 
-        ArmorStand armorStand = (ArmorStand) Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), 1, 66, 4)
-                , EntityType.ARMOR_STAND);
-
-        Block block = Bukkit.getWorld("world").getBlockAt(1, 65, 4);
-        block.setType(Material.DIAMOND_BLOCK);
-
-
-        getCommand("heal").setExecutor(new HealCommand());
-        getCommand("gm").setExecutor(new GamemodeCommand(this));
-        getCommand("gm").setTabCompleter(new GamemodeTab());
-        getCommand("config").setExecutor(new ConfigCommand(this));
-        getCommand("permission").setExecutor(new PermissionsCommand());
-        getCommand("lava-particle").setExecutor(new ParticleCommand());
-        getCommand("vanish").setExecutor(new VanishCommand());
-        getCommand("rules").setExecutor(new BookCommand());
-        getCommand("banner").setExecutor(new BannerCommand());
-        getCommand("punish").setExecutor(new PunishCommand());
-        getCommand("punish").setTabCompleter(new PunishTab());
-        getCommand("message").setExecutor(new MessageCommand(this));
-        getCommand("reply").setExecutor(new ReplyCommand(this));
-        getCommand("menu").setExecutor(new MenuCommand());
-        getCommand("boost").setExecutor(new BoostCommand());
-        getCommand("skull").setExecutor(new SkullCommand());
+        registerCommandsAndTabCompleters();
 
         events.clearAllBossBars();
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendMessage("Han pasado 10 segundos");
+                player.sendMessage("Han pasado 100 segundos");
             }
-        },200, 200);
+        },2000, 2000);
     }
 
     @Override
@@ -85,7 +59,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
 
     public HashMap<UUID, UUID> getRecentMessages() {return recentMessages;}
 
-    private File initiateFile(String name) {
+    private void initiateFile(String name) {
         File file = new File(getDataFolder(),name+".yaml");
         if (!file.exists()) {
             try {
@@ -94,6 +68,24 @@ public final class Firstplugin extends JavaPlugin implements Listener {
                 System.out.println("Can't load file! Error.");
             }
         }
-        return file;
+    }
+
+    private void registerCommandsAndTabCompleters() {
+        Objects.requireNonNull(getCommand("heal"), "Command not found").setExecutor(new HealCommand());
+        Objects.requireNonNull(getCommand("gm"), "Command not found").setExecutor(new GamemodeCommand(this));
+        Objects.requireNonNull(getCommand("gm"), "Command not found").setTabCompleter(new GamemodeTab());
+        Objects.requireNonNull(getCommand("config"), "Command not found").setExecutor(new ConfigCommand(this));
+        Objects.requireNonNull(getCommand("permission"), "Command not found").setExecutor(new PermissionsCommand());
+        Objects.requireNonNull(getCommand("lava-particle"), "Command not found").setExecutor(new ParticleCommand());
+        Objects.requireNonNull(getCommand("vanish"), "Command not found").setExecutor(new VanishCommand());
+        Objects.requireNonNull(getCommand("rules"), "Command not found").setExecutor(new BookCommand());
+        Objects.requireNonNull(getCommand("banner"), "Command not found").setExecutor(new BannerCommand());
+        Objects.requireNonNull(getCommand("punish"), "Command not found").setExecutor(new PunishCommand());
+        Objects.requireNonNull(getCommand("punish"), "Command not found").setTabCompleter(new PunishTab());
+        Objects.requireNonNull(getCommand("message"), "Command not found").setExecutor(new MessageCommand(this));
+        Objects.requireNonNull(getCommand("reply"), "Command not found").setExecutor(new ReplyCommand(this));
+        Objects.requireNonNull(getCommand("menu"), "Command not found").setExecutor(new MenuCommand());
+        Objects.requireNonNull(getCommand("boost"), "Command not found").setExecutor(new BoostCommand());
+        Objects.requireNonNull(getCommand("skull"),"Command not found").setExecutor(new SkullCommand());
     }
 }
