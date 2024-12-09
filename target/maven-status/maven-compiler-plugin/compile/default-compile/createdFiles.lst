@@ -14,6 +14,7 @@ com\emer\firstplugin\Commands\PunishCommand.class
 com\emer\firstplugin\Commands\VanishCommand.class
 com\emer\firstplugin\Commands\BannerCommand.class
 com\emer\firstplugin\Commands\ReplyCommand.class
+com\emer\firstplugin\Data.class
 com\emer\firstplugin\Events\SectionFive\EventsFive.class
 com\emer\firstplugin\Events\SectionFour\Events.class
 com\emer\firstplugin\PlayerMission.class
