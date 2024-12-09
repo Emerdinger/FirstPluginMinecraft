@@ -5,13 +5,14 @@ import com.emer.firstplugin.Events.SectionFive.EventsFive;
 import com.emer.firstplugin.Events.SectionFour.Events;
 import com.emer.firstplugin.Tabs.GamemodeTab;
 import com.emer.firstplugin.Tabs.PunishTab;
+import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,8 +25,24 @@ public final class Firstplugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        initiateFile("warps");
-        initiateFile("language");
+        initiateFile("warps.yml");
+        initiateFile("data.json");
+        File dataFile = new File(getDataFolder(), "data.json");
+        Data data = new Data("Emerdinger", "Hola, soy Emer", true, new Date());
+        try {
+            Gson gson = new Gson();
+            Writer writer = new FileWriter(dataFile, false);
+            gson.toJson(data, writer);
+            writer.flush();
+            writer.close();
+
+            Reader reader = new FileReader(dataFile);
+            Data readData = gson.fromJson(reader, Data.class);
+            System.out.println(readData.getPlayerName());
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Can't load file! Error.");
+        }
         instance = this;
         events = new Events();
         saveDefaultConfig();
@@ -60,7 +77,7 @@ public final class Firstplugin extends JavaPlugin implements Listener {
     public HashMap<UUID, UUID> getRecentMessages() {return recentMessages;}
 
     private void initiateFile(String name) {
-        File file = new File(getDataFolder(),name+".yml");
+        File file = new File(getDataFolder(),name);
         if (!file.exists()) {
             try {
                 file.createNewFile();
